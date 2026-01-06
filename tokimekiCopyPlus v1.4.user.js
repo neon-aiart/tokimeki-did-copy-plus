@@ -83,7 +83,6 @@
             margin: 0 auto;
             padding: 0;
             color: inherit;
-            inset: unset !important;
             width: fit-content;
             height: 24px;
         }
