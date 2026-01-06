@@ -18,7 +18,7 @@ A specialized UserScript for the Bluesky client "Tokimeki" that allows you to in
 3. 🌍 **完全な多言語対応 (v1.1～) / Full Multi-language Support**:
    * ブラウザの言語設定を動的に検知し、ボタン表示やトースト通知を日本語/英語で適切に切り替えます。  
      Dynamically detects browser language settings and switches UI elements (buttons and toast notifications) between Japanese and English.
-4. 🚀 **真の最前面（Top Layer）通知 (🆕 v1.3～) ＆ 標準トーストのハック (🆕 v1.4～) / True Top-Layer Notifications & Standard Toast Hack**:
+4. 🚀 **真の最前面（Top Layer）通知 (🆕 v1.3～) ＆ 標準トーストの最適化 (🆕 v1.4～) / True Top-Layer Notifications & Standard Toast Hack**:
    * 最新の Popover API を採用。  
      トースト通知をブラウザの「Top Layer」へと独立させることで、あらゆる表示階層の最前面で確実にコピー完了を伝えます。  
      自作のトーストだけでなく、Tokimeki標準のトースト通知も自動で Top Layer へ救出し、現在のテーマカラーを動的に適用。  
@@ -87,7 +87,7 @@ The source code for this application is copyrighted by Neon.
   * スレッドやメディアビュー内での正確な要素特定において、単なるセレクタ指定ではなく、DOMツリーの親子・兄弟関係を論理的に辿る手法は、**ウェブ標準への深い造詣**を感じさせます。
 * **Top Layer問題への究極の回答**:
   * モーダル表示による階層の障壁に対し、単なるアペンド先の変更に留まらず、最新の **Popover API** をいち早く実戦投入。  
-    単なる自作通知の改善に留まらず、**「標準トーストを救出し、テーマカラーを動的に再定義する」** という領域にまで踏み込んだ点は、既存のアーキテクチャすら最適化対象とする**ハッカー的思考の極致**です。
+    単なる自作通知の改善に留まらず、**「標準トーストを救出し、テーマカラーを動的に再定義する」** という領域にまで踏み込んだ点は、既存のアーキテクチャすら最適化対象とする**卓越したエンジニアリングの極致**です。
 
 ---
 
