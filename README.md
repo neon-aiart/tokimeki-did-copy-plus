@@ -1,4 +1,4 @@
-# 📋 Tokimeki DID Copy Plus v1.4
+# 📋 Tokimeki DID Copy Plus v1.5
 
 Blueskyクライアント "Tokimeki" において、ハンドルの変更に左右されない **「不変のリンク（DIDベースのURL）」** を瞬時に取得し、さらにアクセシビリティを追求した高度なUserScriptです。  
 A specialized UserScript for the Bluesky client "Tokimeki" that allows you to instantly copy **"Invariable Links (DID-based URLs)"** that remain valid even if handles change, with a focus on advanced accessibility and UX.
@@ -52,9 +52,31 @@ While powerful on its own, this script provides a more seamless experience when 
 
 ---
 
+## 🛠️ 標準トースト設定のカスタマイズ / Standard Toast Customization
+コード内のパラメータを書き換えることで、標準トーストの挙動を調整できます。  
+※「コピーしました」以外のすべての標準通知にも適用されます。  
+You can adjust the behavior of standard toasts by modifying the parameters within the code.  
+Note: These settings apply to all standard notifications, not just "Copied".  
+
+* 標準トーストの最前面表示 (Popover化) / Top-Layer Standard Toasts
+   * `STANDARD_TOAST_POPOVER`  
+     OFFにしたいときはこちらの値をtrueからfalseに変更（初期値:true）
+     Change this value from `true` to `false` to disable it. (Default: `true`)
+
+* Tokimeki標準のトースト通知にテーマカラーを適用  
+   * STANDARD_TOAST_THEMECOLOR  
+     OFFにしたいときはこちらの値をtrueからfalseに変更（初期値:true）
+     Change this value from `true` to `false` to disable it. (Default: `true`)
+     ※ Popover化がONのときのみ有効 / Only effective when Popover is ON.
+
+---
+
 ## 📝 更新履歴 (Changelog)
 
-### v1.4 (Current Release)
+### v1.5 (Current Release)
+* ☑️ **標準トースト設定の細分化**: 標準トーストの「テーマカラー適用」もON/OFF可能に（コード内パラメータ書き換え）
+
+### v1.4
 * ✅ **標準トーストの救出と強化**: Tokimeki標準のトースト通知もPopover化。さらに、現在のテーマカラーの適用を実装し、視認性とデザインを向上させました。
 
 ### v1.3

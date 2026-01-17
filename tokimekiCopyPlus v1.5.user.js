@@ -3,7 +3,7 @@
 // @namespace      https://bsky.app/profile/neon-ai.art
 // @homepage       https://neon-aiart.github.io/
 // @icon           data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌈</text></svg>
-// @version        1.4
+// @version        1.5
 // @description    Adds "Copy URL with DID" to the post menu on TOKIMEKI(Bluesky client).
 // @description:ja TOKIMEKIのポストのメニューに「DIDでURLをコピー」を追加
 // @author         ねおん
@@ -36,10 +36,11 @@
 (function() {
     'use strict';
 
-    const VERSION = '1.4';
+    const VERSION = '1.5';
     const STORE_KEY = 'tokimeki_copy_plus';
     let toastTimeoutId = null;
-    const STANDARD_TOAST_POPOVER = true; // Tokimeki標準トースト(Sonner)をPopover化
+    const STANDARD_TOAST_POPOVER = true;    // Tokimeki標準トースト(Sonner)をPopover化
+    const STANDARD_TOAST_THEMECOLOR = true; // Tokimeki標準トーストにテーマの色の適用
 
     // ========= グローバル変数 =========
     // ① メニュー要素のセレクタ
@@ -298,7 +299,7 @@
 
                         // 3. テーマ適用（クラスではなく「色」を直接継承させる）
                         const appEl = document.querySelector('.app');
-                        if (appEl) {
+                        if (STANDARD_TOAST_THEMECOLOR && appEl) {
                             const style = getComputedStyle(appEl);
                             // Tokimekiの背景色と文字色の変数を取得
                             const bgColor = style.getPropertyValue('--bg-color-1') || 'var(--bg-color-1)';
