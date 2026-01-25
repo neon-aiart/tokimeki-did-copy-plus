@@ -27,15 +27,15 @@ A specialized UserScript for the Bluesky client "Tokimeki" that allows you to in
 
 ---
 
-### ✨ インストール方法 / Installation Guide
+### ✨ インストール方法 / Installation Guide  
 
-* **UserScriptマネージャーをインストール (Install the UserScript manager):**
-   * **Tampermonkey**: [https://www.tampermonkey.net/](https://www.tampermonkey.net/)
-   * **ScriptCat**: [https://scriptcat.org/](https://scriptcat.org/)
+* **UserScriptマネージャーをインストール (Install the UserScript manager):**  
+   * **Tampermonkey**: [https://www.tampermonkey.net/](https://www.tampermonkey.net/)  
+   * **ScriptCat**: [https://scriptcat.org/](https://scriptcat.org/)  
 
-* **スクリプトをインストール (Install the script):**
+* **スクリプトをインストール (Install the script):**  
    * [Greasy Fork](https://greasyfork.org/ja/scripts/557385) にアクセスし、「インストール」ボタンを押してください。  
-     Access and click the "Install" button.
+     Access and click the "Install" button.  
 
 ---
 
@@ -45,7 +45,7 @@ A specialized UserScript for the Bluesky client "Tokimeki" that allows you to in
 While powerful on its own, this script provides a more seamless experience when paired with the following tool.
 
 🔄 **[Bluesky ⇔ Tokimeki Switcher](https://greasyfork.org/ja/scripts/545465)**:
-  * 公式Web版（bsky.app）と Tokimeki をワンクリックで行き来できる連携ボタンを追加します。  
+  * 公式Web版（bsky.app）と Tokimeki をワンクリックで行き来できる切替ボタンを追加します。  
   Adds a one-click button to bridge the official Bluesky Web app and Tokimeki.
   * **「DIDでコピーしたURLを公式で確認する」「公式で見つけたポストをTokimekiの多機能なビューで開き直す」** といった操作が劇的にスムーズになります。  
   Drastically streamlines operations such as "viewing a DID-copied URL on the official app" or "re-opening a post found on the official app within Tokimeki's feature-rich view."
@@ -74,21 +74,21 @@ Note: These settings apply to all standard notifications, not just "Copied".
 ## 📝 更新履歴 (Changelog)
 
 ### v1.5 (Current Release)
-* ☑️ **標準トースト設定の細分化**: 標準トーストの「テーマカラー適用」もON/OFF可能に（コード内パラメータ書き換え）
+☑️ **標準トースト設定の細分化**: 標準トーストのテーマカラー適用もON/OFF可能に（コード内パラメータ書き換え）
 
-### v1.4
-* ✅ **標準トーストの救出と強化**: Tokimeki標準のトースト通知もPopover化。さらに、現在のテーマカラーの適用を実装し、視認性とデザインを向上させました。
+### v1.4  
+✅ **標準トースト通知の救出と強化**: 標準トーストもPopover化＆現在のテーマカラー適用を実装  
 
-### v1.3
-* ✅ **Popover APIの実装**: 通知ロジックを全面刷新。ダイアログの開閉状態に依存せず、常に画面最前面かつ独立して表示される「真の最前面通知」を実現しました。
+### v1.3  
+✅ **Popover APIの実装**: 通知ロジックを全面刷新 "真の最前面通知" を実装  
 
-### v1.2
-* ☑️ **Top Layer対応**: モーダル（メディアビュー）表示中でもトースト通知が隠れないよう、アペンド先を動的に変更するロジックを実装。
-* ☑️ **ロジックの厳格化**: 公式の「URLをコピー」が存在するポストメニューのみにボタンを追加するよう修正し、フィード用メニュー等への誤爆を完全に解消。
+### v1.2  
+☑️ **Top Layer対応**: メディアビューでもトースト通知が隠れないロジックを実装  
+☑️ **ロジックの厳格化**: "URLをコピー"が存在するポストのみにボタンを追加するように修正  
 
-### v1.1
-* ☑️ **スレッド抽出の修正**: 返信時に親ポストのDIDを誤って取得する問題を、DOM階層の解析により修正。
-* ☑️ **多言語対応実装**: 日本語以外の環境での英語表記をサポート。
+### v1.1  
+☑️ **スレッド抽出の修正**: 返信時に親ポストのDIDを誤って取得する問題を修正  
+☑️ **多言語対応実装**: 日本語以外の環境での英語表記をサポート  
 
 ---
 
@@ -133,8 +133,11 @@ The source code for this application is copyrighted by Neon.
 <img src="https://www.google.com/s2/favicons?domain=github.com&size=16" alt="GitHub icon"> GitHub        :<a href="https://github.com/neon-aiart/">https://github.com/neon-aiart/</a>
 <img src="https://neon-aiart.github.io/favicon.ico" alt="neon-aiart icon" width="16" height="16"> GitHub Pages  :<a href="https://neon-aiart.github.io/">https://neon-aiart.github.io/</a>
 <img src="https://www.google.com/s2/favicons?domain=greasyfork.org&size=16" alt="Greasy Fork icon"> Greasy Fork   :<a href="https://greasyfork.org/ja/users/1494762/">https://greasyfork.org/ja/users/1494762/</a>
+<img src="https://www.google.com/s2/favicons?domain=sizu.me&size=16" alt="Sizu icon"> Sizu Diary    :<a href="https://sizu.me/neon_aiart/">https://sizu.me/neon_aiart/</a>
+<img src="https://www.google.com/s2/favicons?domain=ofuse.me&size=16" alt="Ofuse icon"> Ofuse         :<a href="https://ofuse.me/neon/">https://ofuse.me/neon/</a>
 <img src="https://www.google.com/s2/favicons?domain=www.chichi-pui.com&size=16" alt="chichi-pui icon"> chichi-pui    :<a href="https://www.chichi-pui.com/users/neon/">https://www.chichi-pui.com/users/neon/</a>
 <img src="https://www.google.com/s2/favicons?domain=iromirai.jp&size=16" alt="iromirai icon"> iromirai      :<a href="https://iromirai.jp/creators/neon/">https://iromirai.jp/creators/neon/</a>
 <img src="https://www.google.com/s2/favicons?domain=www.days-ai.com&size=16" alt="DaysAI icon"> DaysAI        :<a href="https://www.days-ai.com/users/lxeJbaVeYBCUx11QXOee/">https://www.days-ai.com/users/lxeJbaVeYBCUx11QXOee/</a>
 </pre>
+
 ---
