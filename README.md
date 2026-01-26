@@ -39,20 +39,28 @@ A specialized UserScript for the Bluesky client "Tokimeki" that allows you to in
 
 ---
 
-## 💡 Tips: 快適なエコシステムの構築 / Build Your Ecosystem
+## 💡 Tips: 快適なエコシステムの構築 / Build Your Ecosystem  
 
 このスクリプトは、単体でも強力ですが、以下のスクリプトと組み合わせることで、Blueskyのブラウジング体験をさらにシームレスなものにします。  
-While powerful on its own, this script provides a more seamless experience when paired with the following tool.
+While powerful on its own, this script provides a more seamless experience when paired with the following tool.  
 
-🔄 **[Bluesky ⇔ Tokimeki Switcher](https://greasyfork.org/ja/scripts/545465)**:
+🔄 **[Bluesky ⇔ Tokimeki Switcher](https://greasyfork.org/ja/scripts/545465)**  
   * 公式Web版（bsky.app）と Tokimeki をワンクリックで行き来できる切替ボタンを追加します。  
-  Adds a one-click button to bridge the official Bluesky Web app and Tokimeki.
+  Adds a one-click button to bridge the official Bluesky Web app and Tokimeki.  
   * **「DIDでコピーしたURLを公式で確認する」「公式で見つけたポストをTokimekiの多機能なビューで開き直す」** といった操作が劇的にスムーズになります。  
-  Drastically streamlines operations such as "viewing a DID-copied URL on the official app" or "re-opening a post found on the official app within Tokimeki's feature-rich view."
+  Drastically streamlines operations such as "viewing a DID-copied URL on the official app" or "re-opening a post found on the official app within Tokimeki's feature-rich view."  
+
+### **🌈 [Tokimeki MediaView Fix Plus](https://greasyfork.org/ja/scripts/550775)**  
+* **Tokimekiの操作性を劇的に改善**: メディアビューのクリック修復に加え、通知欄のメディアプレビューや高度なキーボード操作を追加します  
+  **Fixes Tokimeki's MediaView,** adds media previews to the notification column, and enables full keyboard-driven interactions.  
+
+### **📝 [Universal ALT Text Viewer](https://greasyfork.org/ja/scripts/563656)**  
+* **画像や動画のALTテキストを可視化**: マウスホバーだけで瞬時に表示し、ワンクリックでコピーするUserScriptです  
+  This UserScript instantly displays ALT text for images and videos with just a hover, and allows for one-click copying.  
 
 ---
 
-## 🛠️ 標準トースト設定のカスタマイズ / Standard Toast Customization
+## 🛠️ 標準トースト設定のカスタマイズ / Standard Toast Customization  
 コード内のパラメータを書き換えることで、標準トーストの挙動を調整できます。  
 ※「コピーしました」以外のすべての標準通知にも適用されます。  
 You can adjust the behavior of standard toasts by modifying the parameters within the code.  
