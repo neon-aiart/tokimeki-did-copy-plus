@@ -283,8 +283,8 @@
 
                     // セクションまたはol自体がSonner関連かチェック
                     const standardToast = node.closest('[data-sonner-toaster="true"]') ||
-                                         (node.dataset && node.dataset.sonnerToaster === "true" ? node : null) ||
-                                         node.querySelector('[data-sonner-toaster="true"]');
+                                        (node.dataset && node.dataset.sonnerToaster === "true" ? node : null) ||
+                                        node.querySelector('[data-sonner-toaster="true"]');
 
                     if (STANDARD_TOAST_POPOVER && standardToast && standardToast.showPopover && !standardToast.hasAttribute('popover')) {
                         // 1. Popover属性を付与してTop Layerへ飛ばす
