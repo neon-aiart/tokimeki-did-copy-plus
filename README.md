@@ -94,7 +94,7 @@ Note: These settings apply to all standard notifications, not just "Copied".
 
 ☑️ **新しいタブで開く**: 中クリックイベント追加  
 
-### v1.5 (Current Release)  
+### v1.5  
 
 ☑️ **標準トースト設定の細分化**: 標準トーストのテーマカラー適用もON/OFF可能に（コード内パラメータ書き換え）  
 
