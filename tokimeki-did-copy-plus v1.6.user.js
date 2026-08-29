@@ -1,18 +1,16 @@
 // ==UserScript==
 // @name           Tokimeki DID Copy Plus
-// @namespace      https://bsky.app/profile/neon-ai.art
-// @homepage       https://neon-aiart.github.io/
 // @icon           data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌈</text></svg>
-// @version        1.5
+// @version        1.6
 // @description    Adds "Copy URL with DID" to the post menu on TOKIMEKI(Bluesky client).
 // @description:ja TOKIMEKIのポストのメニューに「DIDでURLをコピー」を追加
 // @author         ねおん
+// @namespace      https://bsky.app/profile/neon-ai.art
+// @homepage       https://github.com/neon-aiart
 // @match          https://tokimeki.blue/*
+// @match          https://tokimekibluesky.vercel.app/*
+// @match          http://localhost:5173/*
 // @grant          GM_addStyle
-// @grant          GM_getValue
-// @grant          GM_setValue
-// @grant          GM_registerMenuCommand
-// @grant          GM_unregisterMenuCommand
 // @license        PolyForm Noncommercial 1.0.0; https://polyformproject.org/licenses/noncommercial/1.0.0/
 // ==/UserScript==
 
@@ -20,7 +18,7 @@
  * ==============================================================================
  * IMPORTANT NOTICE / 重要事項
  * ==============================================================================
- * Copyright (c) 2025 ねおん (Neon)
+ * Copyright (c) 2025-2026 ねおん (Neon)
  * Licensed under the PolyForm Noncommercial License 1.0.0.
  * * [JP] 本スクリプトは個人利用・非営利目的でのみ使用・改変が許可されます。
  * 無断転載、作者名の書き換え、およびクレジットの削除は固く禁じます。
@@ -31,12 +29,16 @@
  * author credits is strictly prohibited. If you fork this project, you MUST
  * retain the original credits and authorship.
  * ==============================================================================
+ * Icon Libraries & Licenses:
+ * - Lucide Icons (ISC): https://lucide.dev/icons/
+ *   - ©️ Lucide Contributors: https://lucide.dev/license
+ * ==============================================================================
  */
 
 (function() {
     'use strict';
 
-    const VERSION = '1.5';
+    const VERSION = '1.6';
     const STORE_KEY = 'tokimeki_copy_plus';
     let toastTimeoutId = null;
     const STANDARD_TOAST_POPOVER = true;    // Tokimeki標準トースト(Sonner)をPopover化
@@ -64,13 +66,6 @@
 
     // スタイル定義（GM_addStyle）
     GM_addStyle(`
-        /* Font Awesome 6 Free */
-        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
-        /* Google Material Symbols & Icons (Rounded) */
-        @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
-        /* Lucide Icons */
-        @import url('https://cdn.jsdelivr.net/npm/lucide-static/icons/link.svg');
-
         /* アイコンのstrokeを直接赤色（var(--danger-color)）に固定 */
         li.${CUSTOM_BUTTON_CLASS}-li.${DANGER_COLOR_CLASS} button.${CUSTOM_BUTTON_CLASS} svg {
             stroke: var(--danger-color) !important;
@@ -95,6 +90,7 @@
         return {
             buttonLabel: isJapanese ? 'DIDでURLをコピー' : 'Copy DID-based URL',
             successMsg: isJapanese ? 'DIDベースのURLをコピーしました！' : 'DID-based URL copied!',
+            openTabMsg: isJapanese ? '新しいタブで開いたよ！' : 'Opened in a new tab!',
             errorMsg: isJapanese ? 'コピーに失敗しました。' : 'Failed to copy URL.',
         };
     };
@@ -250,6 +246,7 @@
 
         newLi.appendChild(newButton);
 
+        // 左クリック: URLをクリップボードにコピー
         newButton.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -264,6 +261,20 @@
 
             // メニューを閉じる
             menuDialog.remove();
+        });
+
+        // 中クリック（ホイールクリック）: 新しいタブで開く
+        newButton.addEventListener('auxclick', (e) => {
+            // e.button === 1 が「中クリック（ホイールボタン）」を表すよ！
+            if (e.button === 1) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // 新しいタブでBlueskyのURLを開く
+                window.open(urlToCopy, '_blank', 'noopener,noreferrer');
+                // トーストメッセージを表示
+                showToast(i18n.openTabMsg, true);
+            }
         });
 
         // ターゲット項目の直後に挿入
