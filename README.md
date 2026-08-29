@@ -1,5 +1,8 @@
 # 📋 Tokimeki DID Copy Plus v1.6  
 
+[![Version](https://img.shields.io/badge/version-1.6-orange.svg)](https://github.com/neon-aiart/tokimeki-did-copy-plus)
+[![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue.svg)](https://polyformproject.org/licenses/noncommercial/1.0.0/)
+
 Blueskyクライアント "Tokimeki" において、ハンドルの変更に左右されない **「不変のリンク（DIDベースのURL）」** を瞬時に取得し、さらにアクセシビリティを追求した高度なUserScriptです  
 A specialized UserScript for the Bluesky client "Tokimeki" that allows you to instantly copy **"Invariable Links (DID-based URLs)"** that remain valid even if handles change, with a focus on advanced accessibility and UX.  
 
