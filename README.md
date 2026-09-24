@@ -39,7 +39,7 @@ A specialized UserScript for the Bluesky client "Tokimeki" that allows you to in
   * **ScriptCat**: [https://scriptcat.org/](https://scriptcat.org/)  
 
 * **スクリプトをインストール (Install the script):**  
-  * [Greasy Fork](https://greasyfork.org/ja/scripts/557385) にアクセスし、「インストール」ボタンを押してください  
+  * [Greasy Fork](https://greasyfork.org/scripts/557385) にアクセスし、「インストール」ボタンを押してください  
     Access and click the "Install" button.  
 
 ---
