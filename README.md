@@ -6,6 +6,11 @@
 Blueskyクライアント "TOKIMEKI" において、ハンドルの変更に左右されない **「不変のリンク（DIDベースのURL）」** の取得や投稿日時のワンクリックコピー、さらに**Blueskyで直接開く機能**を備え、アクセシビリティと快適さを追求した高度なUserScriptです  
 A specialized UserScript for the Bluesky client "TOKIMEKI" that allows you to instantly copy **"Invariable Links (DID-based URLs)"**, copy post datetimes, and **open posts directly in Bluesky**, with a focus on advanced accessibility and UX.  
 
+⭐ [スター](https://github.com/neon-aiart/tokimeki-did-copy-plus)をポチッとお願いします✨ (Please hit the [Star] button!)  
+
+<a href="https://b.hatena.ne.jp/entry/panel/?url=https://github.com/neon-aiart/tokimeki-did-copy-plus"><img src="https://b.hatena.ne.jp/favicon.ico" width="20" height="20" alt="📖"></a> ポチッと[ブックマーク](https://b.hatena.ne.jp/entry/panel/?url=https://github.com/neon-aiart/tokimeki-did-copy-plus)をお願い致します✨ (Please click the [Bookmark] button!)  
+
+
 ---
 
 ## 🎀 機能紹介 / Features  
