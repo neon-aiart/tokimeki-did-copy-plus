@@ -1,9 +1,12 @@
 // ==UserScript==
-// @name           Tokimeki DID Copy Plus
-// @icon           data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌈</text></svg>
-// @version        1.6
-// @description    Adds "Copy URL with DID" to the post menu on TOKIMEKI(Bluesky client).
-// @description:ja TOKIMEKIのポストのメニューに「DIDでURLをコピー」を追加
+// @name           TOKIMEKI DID & DateTime Copy Plus & Open Bluesky
+// @name:en        TOKIMEKI DID & DateTime Copy Plus & Open Bluesky
+// @name:ja        TOKIMEKI DID & DateTime Copy Plus & Open Bluesky
+// @description    Adds DID-based URL copy, DateTime one-click copy, and middle-click to open Bluesky in new tab to the post menu on TOKIMEKI.
+// @description:en Adds DID-based URL copy, DateTime one-click copy, and middle-click to open Bluesky in new tab to the post menu on TOKIMEKI.
+// @description:ja TOKIMEKIのポストのメニューに「DIDでURLをコピー」、日時のワンクリックコピー、中クリックでの新規タブオープン機能を追加します
+// @version        1.7
+// @icon           data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>
 // @author         ねおん
 // @namespace      https://bsky.app/profile/neon-ai.art
 // @homepage       https://github.com/neon-aiart
@@ -38,11 +41,13 @@
 (function() {
     'use strict';
 
-    const VERSION = '1.6';
-    const STORE_KEY = 'tokimeki_copy_plus';
+    const SCRIPT_VERSION = '1.7';
+    const DEBUG = false;
+    if (DEBUG) console.log(`[${getFormattedDateTime()}] 📋 TOKIMEKI DID & DateTime Copy Plus & Open Bluesky v${SCRIPT_VERSION}: デバッグモード`);
+
     let toastTimeoutId = null;
-    const STANDARD_TOAST_POPOVER = true;    // Tokimeki標準トースト(Sonner)をPopover化
-    const STANDARD_TOAST_THEMECOLOR = true; // Tokimeki標準トーストにテーマの色の適用
+    const STANDARD_TOAST_POPOVER = true;    // TOKIMEKI標準トースト(Sonner)をPopover化
+    const STANDARD_TOAST_THEMECOLOR = true; // TOKIMEKI標準トーストにテーマの色の適用
 
     // ========= グローバル変数 =========
     // ① メニュー要素のセレクタ
@@ -60,9 +65,10 @@
 
     // ========= 設定 =========
 
-    const COPY_SVG = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
-    `;
+    const COPY_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>`;
+
+    const CHECK_Y_PX = '3px'; // チェックマークの縦位置調整
+    const CHECK_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke="currentColor" style="width: 16px; height: 16px; color: #34d399; transform: translateY(${CHECK_Y_PX}); display: block;"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>`;
 
     // スタイル定義（GM_addStyle）
     GM_addStyle(`
@@ -89,11 +95,28 @@
         const isJapanese = document.documentElement.lang === 'ja';
         return {
             buttonLabel: isJapanese ? 'DIDでURLをコピー' : 'Copy DID-based URL',
-            successMsg: isJapanese ? 'DIDベースのURLをコピーしました！' : 'DID-based URL copied!',
-            openTabMsg: isJapanese ? '新しいタブで開いたよ！' : 'Opened in a new tab!',
-            errorMsg: isJapanese ? 'コピーに失敗しました。' : 'Failed to copy URL.',
+            successMsg: isJapanese ? 'DIDベースのURLをコピーしたよ🐾' : 'DID-based URL copied!🐾',
+            openTabMsg: isJapanese ? '新しいタブで開いたよ✨' : 'Opened in a new tab!✨',
+            errorMsg: isJapanese ? 'コピーに失敗しました🥲' : 'Failed to copy URL.🥲',
+            dateSuccessMsg: isJapanese ? '投稿日時をコピーしたよ😺' : 'Copied post date & time!😺',
         };
     };
+
+    // 日時
+    function getFormattedDateTime() {
+        const now = new Date();
+
+        const pad = (num) => num.toString().padStart(2, '0'); // ２桁にする関数
+
+        const y = now.getFullYear();
+        const m = pad(now.getMonth() + 1);
+        const d = pad(now.getDate());
+        const h = pad(now.getHours());
+        const min = pad(now.getMinutes());
+        const s = pad(now.getSeconds());
+
+        return `${y}/${m}/${d} ${h}:${min}:${s}`;
+    }
 
     // ========= トーストメッセージ =========
     function showToast(msg, isSuccess) {
@@ -106,9 +129,7 @@
         }
 
         const existingToast = document.getElementById(toastId);
-        if (existingToast) {
-            existingToast.remove();
-        }
+        if (existingToast) existingToast.remove();
 
         const toast = document.createElement('div');
         toast.textContent = msg;
@@ -116,9 +137,7 @@
         toast.classList.add('tcp-toast-mei');
 
         // 魔法の属性: Chrome/Edge/Safari/Firefox(最新) 対応
-        if (toast.showPopover) {
-            toast.setAttribute('popover', 'manual');
-        }
+        if (toast.showPopover) toast.setAttribute('popover', 'manual');
 
         let bgColor = isSuccess
             ? '#007bff'
@@ -150,9 +169,8 @@
         document.body.appendChild(toast);
 
         // popoverとして表示
-        if (toast.showPopover) {
-            toast.showPopover();
-        }
+        if (toast.showPopover) toast.showPopover();
+
         // フェードインアニメーション
         setTimeout(() => {
             toast.style.opacity = '1';
@@ -165,9 +183,7 @@
                 toast.style.opacity = '0';
                 toast.style.transform = 'translate(-50%, 0)';
                 setTimeout(() => {
-                    if (document.body.contains(toast)) {
-                        toast.remove();
-                    }
+                    if (document.body.contains(toast)) toast.remove();
                     toastTimeoutId = null;
                 }, 1000);
             }, 3000);
@@ -180,15 +196,11 @@
 
     // AT URIをBlueskyの永続URLに変換
     function atUriToUrl(atUri) {
-        if (!atUri || !atUri.startsWith('at://')) {
-            return null;
-        }
+        if (!atUri || !atUri.startsWith('at://')) return null;
 
         // at://did:plc:xxxx/app.bsky.feed.post/rkey の形式を想定
         const parts = atUri.replace('at://', '').split('/');
-        if (parts.length !== 3 || parts[1] !== 'app.bsky.feed.post') {
-            return null;
-        }
+        if (parts.length !== 3 || parts[1] !== 'app.bsky.feed.post') return null;
 
         // Bluesky公式クライアントのURL形式
         return `https://bsky.app/profile/${parts[0]}/post/${parts[2]}`;
@@ -201,33 +213,41 @@
     function addCopyIconToMenu(menuDialog) {
         // メニューリスト要素を取得
         const menuList = menuDialog.querySelector(MENU_LIST_SELECTOR);
-        // 既にアイコンが追加されていないかチェック
-        if (!menuList || menuList.querySelector(`.${CUSTOM_BUTTON_CLASS}`)) {
+        if (!menuList) return;
+
+        // 本家の「URLコピー」項目を取得
+        const copyItems = menuList.querySelectorAll('.timeline-menu-list__item--copy-url');
+        const copyUrlLi = copyItems.length > 0 ? copyItems[0] : null;
+        if (!copyUrlLi) return;
+
+        // 既に自前のボタンが追加されているかチェック
+        let existingCustomLi = menuList.querySelector(`.${CUSTOM_BUTTON_CLASS}-li`);
+
+        if (existingCustomLi) {
+            // 【防衛策】すでに存在していても、直前の要素が本家のURLコピーでなければ、位置を強制的に正しい場所へ引っ張り戻す！
+            if (existingCustomLi.previousElementSibling !== copyUrlLi) {
+                menuList.insertBefore(existingCustomLi, copyUrlLi.nextSibling);
+            }
             return;
         }
-
-        const copyUrlLi = menuList.querySelector('.timeline-menu-list__item--copy-url');
-        if (!copyUrlLi) {
-            return;
-        } // URLコピー項目がないメニューには追加しない
+        if (DEBUG) console.log('[DEBUG] 📋Copy URL Li:', copyUrlLi);
 
         // 投稿コンテナから atUri を取得
         const postContainer = menuDialog.closest(POST_CONTAINER_SELECTOR);
-        if (!postContainer) {
-            return;
-        }
+        if (!postContainer) return;
 
         // メニューの直近の content またはコンテナ内の最後の content を取得
         const contents = Array.from(postContainer.querySelectorAll('div.timeline__content[data-aturi]'));
         const atUri = contents.length > 0 ? contents[contents.length - 1].dataset.aturi : null;
-        if (!atUri) {
-            return;
-        }
+        if (!atUri) return;
 
         const urlToCopy = atUriToUrl(atUri);
 
         // 最新の言語設定を取得
         const i18n = getI18n();
+
+        // 挿入直前のメニューリストのHTML構造を丸ごとログ出力して、誰がどこにいるか暴くわよ！
+        if (DEBUG) console.log('[DEBUG] 📋 timeline-menu-list', menuList);
 
         // 既存のメニュー項目からスタイルを継承するためのLi要素を取得
         const existingItemLi = menuList.querySelector('li.timeline-menu-list__item');
@@ -281,6 +301,88 @@
         menuList.insertBefore(newLi, copyUrlLi.nextSibling);
     }
 
+    // DateTime（投稿日時）のワンクリックコピー処理
+    let dateTimeCopyTimer = null;
+    let originalDateTimeContent = null;
+    let originalWidth = null;
+    let activeDateTimeRef = null;
+    function initDateTimeCopy() {
+        document.body.addEventListener('click', (e) => {
+            // 左クリック以外（中クリックや右クリックなど）は無視するわ
+            if (e.button !== 0) return;
+
+            // クリックされた要素、またはその親要素が .tooltip-ref かどうか判定
+            const tooltipRef = e.target.closest('.timeline__date .tooltip-ref');
+            if (!tooltipRef) return;
+
+            // 一番近い .tooltip-wrap から、隠れている絶対時間 (.timeline-tooltip) を探すわ
+            const tooltipWrap = tooltipRef.closest('.tooltip-wrap');
+            if (!tooltipWrap) return;
+
+            const tooltipEl = tooltipWrap.querySelector('.timeline-tooltip');
+            if (!tooltipEl) return;
+
+            const dateTimeText = tooltipEl.textContent ? tooltipEl.textContent.trim() : '';
+            if (!dateTimeText) return;
+
+            // デフォルトの挙動やイベント伝播をストップ
+            e.preventDefault();
+            e.stopPropagation();
+
+            const i18n = getI18n();
+
+            // クリップボードにコピー！
+            navigator.clipboard.writeText(dateTimeText)
+                .then(() => {
+                    // 視覚的フィードバック：クリックされた要素の中身を一時的にチェックマークと完了メッセージに変更！
+                    if (dateTimeCopyTimer) {
+                        clearTimeout(dateTimeCopyTimer);
+                        dateTimeCopyTimer = null;
+                        if (activeDateTimeRef && originalDateTimeContent) {
+                            activeDateTimeRef.innerHTML = originalDateTimeContent;
+                            activeDateTimeRef.style.width = '';
+                            activeDateTimeRef.style.display = '';
+                            activeDateTimeRef.style.alignItems = '';
+                            activeDateTimeRef.style.justifyContent = '';
+                        }
+                    }
+
+                    // クリックされた瞬間の元の横幅を取得して固定する！
+                    const currentWidth = tooltipRef.getBoundingClientRect().width;
+
+                    originalDateTimeContent = tooltipRef.innerHTML;
+                    originalWidth = tooltipRef.style.width;
+                    activeDateTimeRef = tooltipRef;
+
+                    // 幅を固定しつつ、中身をフレックスボックスで完全に中央へ配置する
+                    tooltipRef.style.width = `${currentWidth}px`;
+                    tooltipRef.style.display = 'inline-flex';
+                    tooltipRef.style.alignItems = 'center';
+                    tooltipRef.style.justifyContent = 'center';
+                    tooltipRef.innerHTML = CHECK_SVG;
+
+                    dateTimeCopyTimer = setTimeout(() => {
+                        if (activeDateTimeRef && originalDateTimeContent) {
+                            activeDateTimeRef.innerHTML = originalDateTimeContent;
+                            activeDateTimeRef.style.width = originalWidth;
+                            activeDateTimeRef.style.display = '';
+                            activeDateTimeRef.style.alignItems = '';
+                            activeDateTimeRef.style.justifyContent = '';
+                        }
+                        dateTimeCopyTimer = null;
+                        originalDateTimeContent = null;
+                        originalWidth = null;
+                        activeDateTimeRef = null;
+                    }, 600);
+
+                    showToast(i18n.dateSuccessMsg, true);
+                })
+                .catch(() => {
+                    showToast(i18n.errorMsg, false);
+                });
+        }, true); // キャプチャフェーズでイベントを完全封鎖
+    }
+
     // MutationObserver
     const observer = new MutationObserver((mutations) => {
         for (const mutation of mutations) {
@@ -290,7 +392,7 @@
                         continue;
                     } // 要素ノードでない場合はスキップ
 
-                    // --- Tokimeki標準トースト(Sonner)をPopover化 ---
+                    // --- TOKIMEKI標準トースト(Sonner)をPopover化 ---
 
                     // セクションまたはol自体がSonner関連かチェック
                     const standardToast = node.closest('[data-sonner-toaster="true"]') ||
@@ -312,7 +414,7 @@
                         const appEl = document.querySelector('.app');
                         if (STANDARD_TOAST_THEMECOLOR && appEl) {
                             const style = getComputedStyle(appEl);
-                            // Tokimekiの背景色と文字色の変数を取得
+                            // TOKIMEKIの背景色と文字色の変数を取得
                             const bgColor = style.getPropertyValue('--bg-color-1') || 'var(--bg-color-1)';
                             const textColor = style.getPropertyValue('--primary-color') || 'var(--primary-color)';
 
@@ -327,7 +429,7 @@
 
                         // 4. 表示開始
                         standardToast.showPopover();
-                        // console.log('[TCP] Tokimeki Standard Toast rescued to Top Layer!');
+                        if (DEBUG) console.log('[DEBUG] 📋 TOKIMEKI Standard Toast rescued to Top Layer!');
                     }
 
                     /* --- [DEBUG] Tokimeki標準トーストの捕獲ロジック ---
@@ -338,7 +440,7 @@
                     const toastOl = node.matches('ol') ? node : node.querySelector('ol');
 
                     if (toastOl) {
-                        console.log('--- [DEBUG] Tokimeki Standard Toast Detected! ---');
+                        console.log('--- [DEBUG] 📋 Tokimeki Standard Toast Detected! ---');
                         console.log('Outer HTML:', toastOl.outerHTML);
                         console.log('Child Nodes:', toastOl.innerHTML);
                         console.dir(toastOl); // さらに詳細を見たい場合はこれ
@@ -347,17 +449,20 @@
 
                     // メニュー要素を特定
                     const menu = node.matches(MENU_SELECTOR) ? node : node.querySelector(MENU_SELECTOR);
-                    if (menu) {
-                        addCopyIconToMenu(menu);
-                    }
+                    if (menu) addCopyIconToMenu(menu);
                 }
             }
         }
+
+        // もしDOMの変更によってメニュー内の順序が狂わされた場合も検知して位置を直す
+        const openMenu = document.querySelector(MENU_SELECTOR);
+        if (openMenu) addCopyIconToMenu(openMenu);
     });
 
     // 監視を開始
     observer.observe(document.body, { childList: true, subtree: true, });
 
-    // GM_registerMenuCommand('キー設定', openSettings);
+    // DateTimeワンクリックコピーのイベントリスナーを登録
+    initDateTimeCopy();
 
 })();

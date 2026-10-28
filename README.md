@@ -1,10 +1,10 @@
-# 📋 Tokimeki DID Copy Plus v1.6  
+# 📋 TOKIMEKI DID & DateTime Copy Plus & Open Bluesky  
 
-[![Version](https://img.shields.io/badge/version-1.6-orange.svg)](https://github.com/neon-aiart/tokimeki-did-copy-plus)
+[![Version](https://img.shields.io/badge/version-1.7-orange.svg)](https://github.com/neon-aiart/tokimeki-did-copy-plus)
 [![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue.svg)](https://polyformproject.org/licenses/noncommercial/1.0.0/)
 
-Blueskyクライアント "Tokimeki" において、ハンドルの変更に左右されない **「不変のリンク（DIDベースのURL）」** を瞬時に取得し、さらにアクセシビリティを追求した高度なUserScriptです  
-A specialized UserScript for the Bluesky client "Tokimeki" that allows you to instantly copy **"Invariable Links (DID-based URLs)"** that remain valid even if handles change, with a focus on advanced accessibility and UX.  
+Blueskyクライアント "TOKIMEKI" において、ハンドルの変更に左右されない **「不変のリンク（DIDベースのURL）」** の取得や投稿日時のワンクリックコピー、さらに**Blueskyで直接開く機能**を備え、アクセシビリティと快適さを追求した高度なUserScriptです  
+A specialized UserScript for the Bluesky client "TOKIMEKI" that allows you to instantly copy **"Invariable Links (DID-based URLs)"**, copy post datetimes, and **open posts directly in Bluesky**, with a focus on advanced accessibility and UX.  
 
 ---
 
@@ -15,56 +15,25 @@ A specialized UserScript for the Bluesky client "Tokimeki" that allows you to in
   ハンドル名の変更に影響されない、DID（Decentralized Identifier）を用いた永続的なURLをクリップボードにコピーします  
   Adds "Copy DID-based URL" to the post menu.  
   It copies a permanent URL using the DID (Decentralized Identifier), ensuring links remain valid even if the user changes their handle.  
-2. 🔗 **新しいタブで直接開く / Open Directly in a New Tab**:  
+2. 🕒 **投稿日時のワンクリックコピー / DateTime One-Click Copy**:  
+   ポストの投稿日時（相対時間）をクリックするだけで、正確な絶対日時を瞬時にクリップボードへコピーします  
+   コピー成功時には、要素の幅を維持したままスッキリとした緑色のチェックマーク（✓）に一時変化するスマートな視覚的フィードバックを提供します  
+   Simply click the post's relative timestamp to instantly copy the exact absolute date and time to your clipboard.  
+   Upon successful copy, it provides a smart visual feedback by temporarily transitioning into a clean green checkmark (✓) while maintaining layout stability.  
+3. 🔗 **新しいタブで直接開く / Open Directly in a New Tab**:  
    メニュー項目を**中クリック（ホイールクリック）**すると、DIDベースのURLをそのまま新しいタブで開きます  
    Middle-clicking (scroll wheel click) the menu item opens the DID-based URL directly in a new tab.  
-3. 🔄 **コンテキスト指向の抽出 / Context-Aware Extraction**:  
+4. 🔄 **コンテキスト指向の抽出 / Context-Aware Extraction**:  
   スレッド表示（返信）やメディアビュー内など、複雑なDOM構造の中でも「今、メニューを開いたターゲットのポスト」を正確に特定してDIDを取得します  
   Accurately identifies the target post from complex DOM structures, such as within threads or MediaView, to extract the correct DID.  
-4. 🌍 **完全な多言語対応 / Full Multi-language Support**:  
+5. 🌍 **完全な多言語対応 / Full Multi-language Support**:  
   ブラウザの言語設定を動的に検知し、ボタン表示やトースト通知を日本語/英語で適切に切り替えます  
   Dynamically detects browser language settings and switches UI elements (buttons and toast notifications) between Japanese and English.  
-5. 🚀 **真の最前面（Top Layer）通知 ＆ 標準トーストの最適化 / True Top-Layer Notifications & Standard Toast Hack**:  
+6. 🚀 **真の最前面（Top Layer）通知 ＆ 標準トーストの最適化 / True Top-Layer Notifications & Standard Toast Hack**:  
   最新の Popover API を採用: トースト通知をブラウザの「Top Layer」へと独立させることで、あらゆる表示階層の最前面で確実にコピー完了を伝えます  
-  自作のトーストだけでなく、Tokimeki標準のトースト通知も自動で Top Layer へ救出し、現在のテーマカラーを動的に適用  
+  自作のトーストだけでなく、TOKIMEKI標準のトースト通知も自動で Top Layer へ救出し、現在のテーマカラーを動的に適用  
   Adopts the latest Popover API. By isolating toast notifications into the browser's 'Top Layer', we ensure copy completion is communicated at the very front of all display layers.  
-  In addition to custom toasts, it automatically "rescues" standard Tokimeki notifications to the Top Layer and dynamically applies the current theme color.  
-
----
-
-### ✨ インストール方法 / Installation Guide  
-
-* **UserScriptマネージャーをインストール (Install the UserScript manager):**  
-  * **Tampermonkey**: [https://www.tampermonkey.net/](https://www.tampermonkey.net/)  
-  * **ScriptCat**: [https://scriptcat.org/](https://scriptcat.org/)  
-
-* **スクリプトをインストール (Install the script):**  
-  * [Greasy Fork](https://greasyfork.org/ja/scripts/557385) にアクセスし、「インストール」ボタンを押してください  
-    Access and click the "Install" button.  
-
----
-
-## 💡 Tips: 快適なエコシステムの構築 / Build Your Ecosystem  
-
-このスクリプトは、単体でも強力ですが、以下のスクリプトと組み合わせることで、Blueskyのブラウジング体験をさらにシームレスなものにします  
-While powerful on its own, this script provides a more seamless experience when paired with the following tool.  
-
-### **🔄 [Bluesky ⇔ Tokimeki Switcher](https://greasyfork.org/ja/scripts/545465)**  
-
-* 公式Web版（bsky.app）と Tokimeki をワンクリックで行き来できる切替ボタンを追加します  
-  Adds a one-click button to bridge the official Bluesky Web app and Tokimeki.  
-* **「DIDでコピーしたURLを公式で確認する」「公式で見つけたポストをTokimekiの多機能なビューで開き直す」** といった操作が劇的にスムーズになります  
-  Drastically streamlines operations such as "viewing a DID-copied URL on the official app" or "re-opening a post found on the official app within Tokimeki's feature-rich view."  
-
-### **✨ [TOKIMEKI Sparkle Enhancer](https://greasyfork.org/ja/scripts/550775)**  
-
-* **Tokimekiの操作性を劇的に改善**: TOKIMEKIの「メディアビュー（画像表示）」や「予約投稿一覧」をより快適に、もっとキラキラに拡張します  
-  **Fixes Tokimeki's MediaView,** Make TOKIMEKI's Media View and Scheduled Posts List smoother, cooler, and extra sparkling!  
-
-### **📝 [Universal ALT Text Viewer](https://greasyfork.org/ja/scripts/563656)**  
-
-* **画像や動画のALTテキストを可視化**: マウスホバーだけで瞬時に表示し、ワンクリックでコピーするUserScriptです  
-  This UserScript instantly displays ALT text for images and videos with just a hover, and allows for one-click copying.  
+  In addition to custom toasts, it automatically "rescues" standard TOKIMEKI notifications to the Top Layer and dynamically applies the current theme color.  
 
 ---
 
@@ -80,7 +49,7 @@ Note: These settings apply to all standard notifications, not just "Copied".
     OFFにしたいときはこちらの値をtrueからfalseに変更（初期値:true）  
     Change this value from `true` to `false` to disable it. (Default: `true`)  
 
-* Tokimeki標準のトースト通知にテーマカラーを適用  
+* TOKIMEKI標準のトースト通知にテーマカラーを適用  
   * STANDARD_TOAST_THEMECOLOR  
     OFFにしたいときはこちらの値をtrueからfalseに変更（初期値:true）  
     Change this value from `true` to `false` to disable it. (Default: `true`)  
@@ -88,9 +57,74 @@ Note: These settings apply to all standard notifications, not just "Copied".
 
 ---
 
+### ✨ インストール方法 / Installation Guide  
+
+* **UserScriptマネージャーをインストール (Install the UserScript manager):**  
+  * **Tampermonkey**: [https://www.tampermonkey.net/](https://www.tampermonkey.net/)  
+  * **ScriptCat**: [https://scriptcat.org/](https://scriptcat.org/)  
+
+* **スクリプトをインストール (Install the script):**  
+  * [Greasy Fork](https://greasyfork.org/scripts/557385) にアクセスし、「インストール」ボタンを押してください  
+    Access and click the "Install" button.  
+
+---
+
+## 💡 Tips: 快適なエコシステムの構築 / Build Your Ecosystem  
+
+このスクリプトは、単体でも強力ですが、以下のスクリプトと組み合わせることで、Blueskyのブラウジング体験をさらにシームレスなものにします  
+While powerful on its own, this script provides a more seamless experience when paired with the following tool.  
+
+### **🔄️ [Bluesky Tokimeki Switcher](https://github.com/neon-aiart/bsky-tokimeki-switcher)**  
+
+**BSKY ⇔ Tokimeki 切り替え**: URLをボタンやショートカットで瞬時に切り替えるUserScript  
+
+A UserScript to instantly **switch between Bluesky and Tokimeki URLs** via buttons or shortcuts.  
+
+### **✨ [TOKIMEKI Sparkle Enhancer](https://github.com/neon-aiart/tokimeki-sparkle-enhancer)**  
+
+TOKIMEKIの「メディアビュー（画像表示）」や「予約投稿一覧」をより快適に、もっとキラキラに拡張するためのUserScript  
+
+TOKIMEKI Sparkle Enhancer is a Tampermonkey userscript designed to expand and elevate your TOKIMEKI experience, focused on bringing extra sparkle and comfort to your "Media View (Image Viewer)" and "Scheduled Posts."  
+
+### **🥞 [TOKIMEKI Hyperlink Rich Paste](https://github.com/neon-aiart/tokimeki-hyperlink-rich-paste)**  
+
+[TOKIMEKI](https://tokimeki.blue)の投稿文入力エリアへテキストをペーストする際、ハイパーリンク（アンカータグ `<a>`）をプレーンテキストに変換されることなく、リンクを維持したまま貼り付けする UserScript  
+
+A UserScript that preserves hyperlinks (anchor tags `<a>`) when pasting text into the post input area of [TOKIMEKI](https://tokimeki.blue), preventing them from being converted to plain text.  
+
+### **⚓ [TOKIMEKI Movable Publish Popup](https://github.com/neon-aiart/tokimeki-movable-publish-popup)**  
+
+[TOKIMEKI](https://tokimeki.blue)の投稿文入力エリアを自由な位置へドラッグ移動および高さのリサイズができるようにするユーザースクリプト  
+
+A UserScript that allows you to freely drag, relocate, and resize the height of the post popup (dialog) on TOKIMEKI (a Bluesky client).  
+
+### **📝 [Universal ALT Text Viewer](https://github.com/neon-aiart/universal-alt-text-viewer)**  
+
+**画像や動画のALTテキストを可視化**: マウスホバーだけで瞬時に表示し、ワンクリックでコピーするUserScriptです  
+
+This UserScript **instantly displays ALT text for images and videos** with just a hover, and allows for one-click copying.  
+
+### **🧼 [Partout Purge: Pure Clean Copy Link](https://github.com/neon-aiart/partout-purge)**  
+
+X（Twitter）、YouTube、note、Bluesky、Amazonなどの主要サイトで、リンクや画像リンクの不要なトラッキングパラメータ（`?s=20`, `?t=...`, `?si=...` など）を自動削除し、最適化するUserScriptです（編集で拡張可能）  
+
+Automatically removes tracking parameters (e.g., `?s=20`, `?t=...`, `?si=...`) and optimizes links for major sites like X (Twitter), YouTube, note, Bluesky, and Amazon (extensible via code editing).  
+
+---
+
 ## 📝 更新履歴 (Changelog)  
 
-### v1.6 (Current Release)  
+### v1.8 and later (Upcoming Tasks / Backlog)  
+
+No Tasks...  
+
+### v1.7 (Current Release)  
+
+☑️ スクリプト名を `TOKIMEKI DID & DateTime Copy Plus & Open Bluesky` に改称  
+☑️ 'DIDでURLをコピー'の挿入位置が変えられる場合の対処を追加  
+✅ ツールチップの絶対日時のワンクリックコピーを実装  
+
+### v1.6  
 
 ☑️ **新しいタブで開く**: 中クリックイベント追加  
 
@@ -190,6 +224,7 @@ Furthermore, we are actively submitting **Malware / Abuse Reports** to relevant 
 <img src="https://www.google.com/s2/favicons?domain=zenn.dev&size=16" alt="Sizu icon"> Zenn Dev      :<a href="https://zenn.dev/neon_aiart/">https://zenn.dev/neon_aiart/</a>
 <img src="https://www.google.com/s2/favicons?domain=sizu.me&size=16" alt="Sizu icon"> Sizu Diary    :<a href="https://sizu.me/neon_aiart/">https://sizu.me/neon_aiart/</a>
 <img src="https://www.google.com/s2/favicons?domain=ofuse.me&size=16" alt="Ofuse icon"> OFUSE         :<a href="https://ofuse.me/neon/">https://ofuse.me/neon/</a>
+<img src="https://www.google.com/s2/favicons?domain=artria-ai.com&size=16" alt="Artrla icon"> ArtrIa        :<a href="https://neon.artria-ai.com/">https://neon.artria-ai.com/</a>
 <img src="https://www.google.com/s2/favicons?domain=www.chichi-pui.com&size=16" alt="chichi-pui icon"> chichi-pui    :<a href="https://www.chichi-pui.com/users/neon/">https://www.chichi-pui.com/users/neon/</a>
 <img src="https://www.google.com/s2/favicons?domain=iromirai.jp&size=16" alt="iromirai icon"> IROMIRAI      :<a href="https://iromirai.jp/creators/neon/">https://iromirai.jp/creators/neon/</a>
 <img src="https://www.google.com/s2/favicons?domain=www.days-ai.com&size=16" alt="DaysAI icon"> DaysAI        :<a href="https://www.days-ai.com/users/lxeJbaVeYBCUx11QXOee/">https://www.days-ai.com/users/lxeJbaVeYBCUx11QXOee/</a>
